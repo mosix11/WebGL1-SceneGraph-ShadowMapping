@@ -1,0 +1,21 @@
+{
+  "name": "final-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "@loaders.gl/core": "^4.2.1",
+    "@loaders.gl/gltf": "^4.2.1",
+    "@loaders.gl/obj": "^4.2.1",
+    "gl-matrix": "^3.4.3",
+    "three": "^0.164.1"
+  }
+}
