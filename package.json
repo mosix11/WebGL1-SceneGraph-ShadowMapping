@@ -16,6 +16,7 @@
     "@loaders.gl/gltf": "^4.2.1",
     "@loaders.gl/obj": "^4.2.1",
     "gl-matrix": "^3.4.3",
+    "primitive-geometry": "^2.10.0",
     "three": "^0.164.1"
   }
 }
