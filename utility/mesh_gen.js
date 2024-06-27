@@ -855,17 +855,8 @@ export async function sphereGuy(gl, programInfo){
 			}
 		}else{
 			thisNode = Sphere(gl, node.name, 0.5, [120, 100, 0, 255], null, null, null, null, programInfo);
-			
-			// let woodenSphere = await woodenSphereLoader.load(gl, programInfo);
-			// woodenSphere = woodenSphere.children[0].children[0];
-			// // woodenSphere.updateWorldMatrix();
-			// // woodenSphere.scaleNode(1/woodenSphere.getBoundingBoxExtent() * 1);
-			// // let scale = 1/woodenSphere.getBoundingBoxExtent() * 1;
-			// // woodenSphere.transformation.scale = [scale, scale, scale];
-			// woodenSphere.rename(node.name);
-			// thisNode = woodenSphere;
+
 			if (node.translation){
-				// thisNode.transformation.translation = vec3.scale(vec3.create(), node.translation, woodenSphere.getBoundingBoxExtent()/2);
 				thisNode.transformation.translation = node.translation;
 			}
 		}
@@ -878,14 +869,11 @@ export async function sphereGuy(gl, programInfo){
 		
 	}
 	await traverse(rootNode, sphereGuyNodeDescriptions);
-	// rootNode.children[0].computeBoundingBox();
-	// console.log('finished');
-	// console.log('ayooo',rootNode.children[0])
+
 	rootNode.applyTransformation(mat4.rotateY(mat4.create(), mat4.create(), Math.PI))
 	rootNode.updateWorldMatrix();
 	rootNode.computeBoundingBox();
-	// console.log(rootNode);
-	// rootNode.scaleNode(0.05);
+
 	return rootNode;
 }
 

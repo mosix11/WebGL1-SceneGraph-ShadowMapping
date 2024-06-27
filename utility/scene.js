@@ -19,12 +19,6 @@ export class Transformation {
         if (src){
             transformationMatrix = mat4.clone(src);
         }
-
-        // mat4.multiply(dst, mat4.translate(mat4.create(), mat4.create(), t), dst);
-        // mat4.multiply(dst, mat4.rotateX(mat4.create(), mat4.create(), r[0]), dst);
-        // mat4.multiply(dst, mat4.rotateY(mat4.create(), mat4.create(), r[1]), dst);
-        // mat4.multiply(dst, mat4.rotateZ(mat4.create(), mat4.create(), r[2]), dst);
-        // mat4.multiply(dst, mat4.scale(mat4.create(), mat4.create(), s), dst);
         
         mat4.multiply(transformationMatrix, mat4.translate(mat4.create(), mat4.create(), t), transformationMatrix);
         mat4.multiply(transformationMatrix, mat4.rotateX(mat4.create(), mat4.create(), r[0]), transformationMatrix);
@@ -32,11 +26,6 @@ export class Transformation {
         mat4.multiply(transformationMatrix, mat4.rotateZ(mat4.create(), mat4.create(), r[2]), transformationMatrix);
         mat4.multiply(transformationMatrix, mat4.scale(mat4.create(), mat4.create(), s), transformationMatrix);
 
-        // mat4.translate(transformationMatrix, transformationMatrix, t);
-        // mat4.rotateX(transformationMatrix, transformationMatrix, r[0]);
-        // mat4.rotateY(transformationMatrix, transformationMatrix, r[1]);
-        // mat4.rotateZ(transformationMatrix, transformationMatrix, r[2]);
-        // mat4.scale(transformationMatrix, transformationMatrix, s);
         return transformationMatrix;
     }
 }
@@ -174,13 +163,11 @@ export class SceneNode{
         // mat4.copy(this.localMatrix, trans);
 
         if (parentWorldMatrix) {
-          // a matrix was passed in so do the math and
-          // store the result in `this.worldMatrix`.
-        //   mat4.multiply(this.worldMatrix, parentWorldMatrix, this.localMatrix);
+            // a matrix was passed in so do the math and
+            // store the result in `this.worldMatrix`.
             mat4.multiply(this.worldMatrix, parentWorldMatrix, trans);
         } else {
-          // no matrix was passed in so just copy localMatrix to worldMatrix
-            // mat4.copy(this.worldMatrix, this.localMatrix);
+            // no matrix was passed in so just copy localMatrix to worldMatrix
             mat4.copy(this.worldMatrix, trans);
         }
        
@@ -233,11 +220,6 @@ export class SceneNode{
 
     getBoundingBoxCenter(){
         let bbox = this.boundingBox;
-        // const center = [
-        //     (bbox.min[0] + bbox.max[0]) / 2,
-        //     (bbox.min[1] + bbox.max[1]) / 2,
-        //     (bbox.min[2] + bbox.max[2]) / 2,
-        // ];
         const center = vec3.create();
         vec3.add(center, bbox.min, bbox.max);
         vec3.scale(center, center, 0.5);
@@ -286,7 +268,7 @@ export class SceneGraph {
         // TODO check computational efficency
         this.computeBoundingBox();
     }
-    //TODO implement functions like find a node or remove a node from scene or replace a node
+    // TODO implement functions like find a node or remove a node from scene or replace a node
     traverse(callback) {
         const traverseNode = (node) => {
             callback(node);
@@ -345,30 +327,6 @@ export class SceneGraph {
     }
 }
 
-// function computeBoundingBoxForMesh(vertices) {
-//     if (vertices.length === 0) {
-//         return null;
-//     }
-
-//     const min = vec3.fromValues(vertices[0], vertices[1], vertices[2]);
-//     const max = vec3.fromValues(vertices[0], vertices[1], vertices[2]);
-
-//     for (let i = 3; i < vertices.length; i += 3) {
-//         const x = vertices[i];
-//         const y = vertices[i + 1];
-//         const z = vertices[i + 2];
-
-//         min[0] = Math.min(min[0], x);
-//         min[1] = Math.min(min[1], y);
-//         min[2] = Math.min(min[2], z);
-
-//         max[0] = Math.max(max[0], x);
-//         max[1] = Math.max(max[1], y);
-//         max[2] = Math.max(max[2], z);
-//     }
-
-//     return { min, max };
-// }
 
 function computeBoundingBoxForMesh(vertices, transformationMatrix) {
     if (vertices.length === 0) {
@@ -455,68 +413,6 @@ function computeBoundingBoxForSceneNode(node) {
     }
 }
 
-// function computeBoundingBoxForSceneNode(node) {
-//     let min = vec3.fromValues(Infinity, Infinity, Infinity);
-//     let max = vec3.fromValues(-Infinity, -Infinity, -Infinity);
-
-//     // First, compute bounding boxes for all children
-//     node.children.forEach(child => {
-//         computeBoundingBoxForSceneNode(child); // Recursively compute for children first
-        
-//         if (child.boundingBox) {
-//             vec3.min(min, min, child.boundingBox.min); // Update min based on child's bounding box
-//             vec3.max(max, max, child.boundingBox.max); // Update max based on child's bounding box
-//         }
-//     });
-
-//     // Compute the bounding box for the current node's mesh if it has one
-//     if (node.drawInfo && node.drawInfo.position) {
-//         const bbox = computeBoundingBoxForMesh(node.drawInfo.position);
-//         if (bbox) {
-//             vec3.min(min, min, bbox.min); // Compare with current node's mesh min
-//             vec3.max(max, max, bbox.max); // Compare with current node's mesh max
-//         }
-//     }
-
-//     // Only update the bounding box if it's valid
-//     if (min[0] !== Infinity && max[0] !== -Infinity) {
-//         const boundingBox = { min, max };
-//         node.setBoundingBox(boundingBox);
-//     } else {
-//         node.setBoundingBox(null); // No valid bounding box
-//     }
-// }
-
-// function computeBoundingBoxForSceneNode(node) {
-//     let min = vec3.fromValues(Infinity, Infinity, Infinity);
-//     let max = vec3.fromValues(-Infinity, -Infinity, -Infinity);
-
-//     function updateBoundingBox(node) {
-        
-//         if (node.drawInfo && node.drawInfo.position.data) {
-//             const bbox = computeBoundingBoxForMesh(node.drawInfo.position.data);
-//             if (bbox) {
-//                 vec3.min(min, min, bbox.min);
-//                 vec3.max(max, max, bbox.max);
-//             }
-//         }
-
-//         node.children.forEach(child => updateBoundingBox(child));
-//     }
-
-//     updateBoundingBox(node);
-//     if (min[0] === Infinity || min[1] === Infinity || min[2] === Infinity ||
-//         max[0] === -Infinity || max[1] === -Infinity || max[2] === -Infinity) {
-//         return null; // No valid bounding box
-//     }
-//     const boundingBox = { min, max };
-//     node.setBoundingBox(boundingBox);
-//     node.children.forEach(child => computeBoundingBoxForSceneNode(child));
-//     return boundingBox;
-// }
-
-
-
 export class Camera {
     constructor() {
         this.position = vec3.create();
@@ -594,7 +490,6 @@ export class Camera {
     }
 
     getFrustumTransformationMatrix(){
-        // mat4.multiply(mat4.create(), mat4.invert(mat4.create(), lightCamera.getProjectionMatrix()), mat4.invert(mat4.create(), lightCamera.getViewMatrix()));
 
         const lightProjMatrix = this.getProjectionMatrix();
         const lightViewMatrix = this.getViewMatrix();

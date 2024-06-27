@@ -387,40 +387,6 @@ async function setUpWebgl(){
   noLightProgramInfo = await createProgramInfo(gl, ['no_light_vsh.vert', 'no_light_fsh.frag']);
   pbrProgram = await createProgramInfo(gl, ['pbr-vsh.vert', 'pbr-fsh.frag']);
 
-
-  // var programInfo = await createProgramInfo(gl, ['m_pbrver2.vert', 'm_pbrsh2.frag']);
-  // var programInfo = await createProgramInfo(gl, ['m_vsh.vert', 'm_mesh_standard_sh.frag']);
-
-  // let myMesh = new GLTFMesh('arash_grass/scene.gltf');
-  // let myMesh = new GLTFMesh('grass-gltf/scene.gltf');
-  // let myMesh = new GLTFMesh('waterbottle/waterbottle.gltf');
-  // let myMesh = new GLTFMesh('skull/scene.gltf');
-  // let myMesh = new GLTFMesh('robot/robot.gltf');
-  // let myMesh = new OBJMesh('Palm_01/Palm_01.obj', 'Palm_01/Palm_01.mtl');
-  // let myMesh = new OBJMesh('obj_Grass/grass.obj', 'obj_Grass/grass2.mtl');
-  // let myMesh = new OBJMesh('arash_globe/grass.obj', 'arash_globe/grass.mtl');
-  // let myMesh = new OBJMesh('export/green_lawn__corona.obj', 'export/green_lawn__corona.mtl');
-
-
-  // let myMesh = new OBJMesh('sun/sun.obj', 'sun/sun.mtl');
-  // let myMesh = new OBJMesh('date_palm/DatePalm.obj', 'date_palm/DatePalm.mtl');
-
-  // let myMesh = new OBJMesh('Grass/LowPolyGrass.obj', 'Grass/LowPolyGrass.mtl');
-  // let myMesh = new OBJMesh('desert_building/H01.obj', 'desert_building/H01.mtl');
-  // let myMesh = new OBJMesh('tree9/trees9.obj', 'tree9/trees9.mtl');
-  // let myMesh = new OBJMesh('chair/chair.obj', 'chair/chair.mtl');
-  // let myMesh = new OBJMesh('nyra/nyra.obj', 'nyra/nyra.mtl');
-  // let myMesh = new OBJMesh('windmill/windmill.obj', 'windmill/windmill.mtl');
-  // let myMesh = new OBJMesh('palm/10446_Palm_Tree_v1_max2010_iteration-2.obj', 'palm/10446_Palm_Tree_v1_max2010_iteration-2.mtl');
-  // let myMesh = new OBJMesh('IndoorPotPlant/indoor plant_02.obj', 'IndoorPotPlant/indoor plant_02.mtl'); 
-  // let myMesh = new OBJMesh('Tree/Tree.obj', 'Tree/Tree.mtl');
-  // let myMesh = new OBJMesh('/teapot/teapot.obj');
-  // let myMesh = new OBJMesh('path/travnikova-cesta.obj', 'path/travnikova-cesta.mtl');
-  // let myMesh = new OBJMesh('Bush/Bush1.obj', 'Bush/Bush1.mtl');
-  // let myMesh = new OBJMesh('fence/13076_Gothic_Wood_Fence_Panel_v2_l3.obj', 'fence/13076_Gothic_Wood_Fence_Panel_v2_l3.mtl');
-  // let myMesh = new OBJMesh('wooden_sphere_OBJ/wooden_sphere.obj', 'wooden_sphere_OBJ/wooden_sphere.mtl');
-  // let myMesh = new OBJMesh('cloud/Cloud_Polygon_Blender_1.obj', 'cloud/Cloud_Polygon_Blender_1.mtl');
-  // let myMesh = new OBJMesh('cloud2/Hi_Clouds_4.obj');
   
 
   const rootNode = new SceneNode('root', null, null, null, null, null, null, true);
@@ -477,7 +443,7 @@ async function setUpWebgl(){
   vec3.copy(sceneCenter, sphereGuyNode.getBoundingBoxCenter());
 
 
-
+  // let myMesh = new OBJMesh('windmill/windmill.obj', 'windmill/windmill.mtl');
   // let node = await myMesh.load(gl, noShadowBlinnPhongProgramInfo);
   // node.rename('testobj');
   
@@ -550,12 +516,6 @@ async function setUpWebgl(){
     requestAnimationFrame(animate);
     sceneGraph.traverse((node) => {
 
-      // if (node.name === 'root'){
-      //   node.transformation.rotation[1] += 0.01;
-      //   sceneGraph.update();
-      //   lightNode.computeBoundingBox();
-      // }
-
       sphereGuyAnimation(node, 0.004, time);
       if (node.name === "sphere_guy"){
         let step = 0.005;
@@ -579,6 +539,12 @@ async function setUpWebgl(){
         sceneGraph.update();
         lightNode.computeBoundingBox();
       }
+      // if (node.name === 'root'){
+      //   node.transformation.rotation[1] += 0.01;
+      //   sceneGraph.update();
+      //   lightNode.computeBoundingBox();
+      // }
+      
       // if (node.name === 'testobj' || node.name === 'sphere' || node.name === 'plane'){
       //   node.transformation.rotation[1] += 0.02;
       //   sceneGraph.update();

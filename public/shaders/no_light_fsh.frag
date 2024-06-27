@@ -21,9 +21,6 @@ uniform sampler2D disp; // Displacement Map
 varying vec2 vUV;
 
 const vec3 lightIntensity = vec3(1, 1, 1);
-// const vec3 lightIntensity = vec3(1.0, 0.6824, 0.0);
-// const float ambientLight = 0.3;
-
 
 void main() {
     // Texture maps
