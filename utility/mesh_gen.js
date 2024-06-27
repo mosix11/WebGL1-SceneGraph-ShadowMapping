@@ -653,9 +653,6 @@ export async function globeCoveredWithGrass(gl, programInfo){
 	const globe = Sphere(gl, 'globe', globeRadius, [10, 140, 0, 255], null, null, null, null, programInfo);
 	globe.computeBoundingBox();
 
-	// let grassLoader = new OBJMesh('Grass/LowPolyGrass.obj', 'Grass/LowPolyGrass.mtl');
-	// let grass = await grassLoader.load(gl, programInfo);
-	// let grassLoader = new OBJMesh('obj_Grass/grass.obj', 'obj_Grass/grass2.mtl');
 	let grass = await grassLoader.load(gl, programInfo);
 	grass = grass.children[0].children[0];
 	grass.rename('grass');
