@@ -58,9 +58,7 @@ void main() {
 
 
     float spotLightEffect = dot(normalize(-vLightDir), normalize(spotLightDir));
-    float limitRange = spotLightInnerLimit - spotLightOuterLimit;
-    vec3 effectiveLight = lightIntensity * clamp((spotLightEffect - spotLightOuterLimit) / limitRange, 0.0, 1.0);
-    
+    vec3 effectiveLight = lightIntensity * smoothstep(spotLightOuterLimit, spotLightInnerLimit, spotLightEffect);
 
     // Blinn-Phong shading
     float cosTheta = max(dot(N, L), 0.0);
@@ -68,18 +66,6 @@ void main() {
     vec3 ambient = ambientColor;
 
     vec3 blinPhongShade = effectiveLight * cosTheta * (diffuseColor + specularColor * pow(cosPhi, shininess)/cosTheta);
-
-    // float spotEffect = dot(normalize(-vLightDir), normalize(spotLightDir));
-    // float spotLightCutoff = spotLightInnerLimit - spotLightOuterLimit;
-    // if (spotEffect > spotLightOuterLimit) {
-    //     float spotFactor = pow(spotEffect, Ns);
-    //     blinPhongShade *= spotFactor;
-    // } else {
-    //     blinPhongShade *= 0.0;
-    // }
-    // vec3 blinPhongShade = lightIntensity * cosTheta * (diffuseColor + specularColor * pow(cosPhi, shininess));
-    //    vec3 blinPhongShade = lightIntensity * max(0.0, cosTheta) * (diffuseColor + specularColor * (pow(max(cosPhi, 0.0), shininess)/cosTheta));
-    // vec3 blinPhongShade = lightIntensity * max(0.0, cosTheta) * (vec3(0.04, 0.6, 0.0) + specularColor * (pow(max(cosPhi, 0.0), shininess)/cosTheta));
 
     vec3 color = ambient + blinPhongShade + emissiveColor;
     // vec3 color = blinPhongShade + emissiveColor;

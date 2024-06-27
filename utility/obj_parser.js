@@ -10,29 +10,6 @@ import {mat3, mat4, vec3, vec4, vec2, mat2} from 'gl-matrix';
 import { normalize } from "three/src/math/MathUtils.js";
 
 
-// class CustomMTLLoader extends MTLLoader {
-//     parse(text) {
-//         const materialsInfo = super.parse(text);
-        
-//         for (let key of Object.keys(materialsInfo.materialsInfo)) {
-            
-            
-//             const values = materialsInfo.materialsInfo[key].tf.split(' ').map(parseFloat);
-//             for (let key2 of Object.keys(materialsInfo.materials)) {
-//                 console.log(key, key2);
-//                 if (toString(key) == toString(key2)){
-//                     console.log(key);
-//                 }
-//             }
-//             // .transmissionFilter = values
-//             // console.log(materialsInfo.materials.key);
-//         }
-//         console.log(materialsInfo);
-
-//         return materialsInfo;
-//     }
-// }
-
 export class OBJMesh{
 
     constructor (objFilePath, mtlFilePath){
@@ -62,25 +39,11 @@ export class OBJMesh{
                 mtlLoader.load('/models/' + this.mtlFilePath, async (materials) => {
                     materials.preload();
                     loader.setMaterials(materials);
-                    
-                    // async function onLoad(object){
-                    //     await this.waitForTexturesToLoad(object);
-                        
-                    //     const node = this.processModel(gl, object);
-                    //     node.computeBoundingBox();
-                    //     // sceneGraph.update();
-                    //     // sceneGraph.computeBoundingBox();
-                    //     resolve(node);
-                    // }
-                    // loader.load('/models/' + this.objFilePath, await onLoad);
                     loader.load('/models/' + this.objFilePath, async (object) => {
                         // console.log(object);
                         await this.waitForTexturesToLoad(object);
-                        
                         const node = this.processModel(gl, object);
                         node.computeBoundingBox();
-                        // sceneGraph.update();
-                        // sceneGraph.computeBoundingBox();
                         resolve(node);
                         
                     });
@@ -246,7 +209,6 @@ export class OBJMesh{
                     
                     
                     const sceneNode = new SceneNode(mesh.name, localMatrix, worldMatrix, null, [], drawInfo, that.programInfo, false, 'sh_bph');
-                    // console.log('adding mesh ',  sceneNode.name, ' to ', parentNode.name);
                     parentNode.addChild(sceneNode);
                     sceneNode.setParent(parentNode);
                     // Process children

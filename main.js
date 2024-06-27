@@ -24,14 +24,14 @@ let gl = null;
 let camera = null;
 
 let nearFarExtent = 3.48*10;
-// let nearFarExtent = 20;
 var rotX=0, rotY=0, transZ=5;
 let sceneGraph = null;
 let sceneCenter = [0, 0, 0];
 let cameraSetting = {
-  cameraStartingPos: [0, 2, transZ],
+  cameraStartingPos: [0, 1, transZ],
   fov: degToRad(60),
-  near: (transZ - nearFarExtent/2),
+  // near: (transZ - nearFarExtent/2),
+  near: 1e-4,
   fat: (transZ + nearFarExtent/2)
 }
 let sunInitialPos = [-1.5, 2.5, -4];
@@ -44,7 +44,7 @@ let lightSetting ={
   fov: degToRad(90),
   aspect: 1.0,
   near: 1e-1,
-  far: 10,
+  far: 14,
   textureSize: 2048
 }
 
@@ -94,6 +94,7 @@ function UpdateProjectionMatrix()
 	var r = canvas.width / canvas.height;
 	cameraSetting.near = (transZ - nearFarExtent/2);
 	const min_n = 1e-4;
+  cameraSetting.near = min_n;
 	if (cameraSetting.near < min_n ) cameraSetting.near = min_n;
 	cameraSetting.far = (transZ + nearFarExtent/2); 
   camera.setPerspective(cameraSetting.fov, r, cameraSetting.near, cameraSetting.far);
@@ -115,10 +116,11 @@ function setUpEvents(){
 		var cx = event.clientX;
 		var cy = event.clientY;
 		if ( event.ctrlKey ) {
-			canvas.onmousemove = function() {
-				canvas.zoom(5*(event.clientY - cy));
-				cy = event.clientY;
-			}
+			// canvas.onmousemove = function() {
+			// 	canvas.zoom(5*(event.clientY - cy));
+			// 	cy = event.clientY;
+			// }
+
 		} else {
 			canvas.onmousemove = function() {
 				// rotY -= (cx - event.clientX)/canvas.width*5;
@@ -228,6 +230,7 @@ function drawScene(){
   sceneGraph.traverse((node) => {
     if (node.drawInfo){
       if (node.multipleDrawInstance){
+        // TODO complete the code
         let modelMats = node.getInstancesWorldMatrices();
         for (let ii = 0; ii < modelMats.length; ii++){
           let modelMat = modelMats[ii];
@@ -308,17 +311,9 @@ function drawScene(){
         
           const lightPositions = new Float32Array([
             [0, 2, 0]
-            // [lightDir[0], lightDir[1], lightDir[2]]
-            // [10.0, 10.0, 10.0],
-            // [-10.0, 10.0, 10.0],
-            // [10.0, -10.0, 10.0],
-            // [-10.0, -10.0, 10.0]
           ].flat());
           const lightColors = new Float32Array([
             [1.0, 1.0, 1.0],
-            // [1.0, 1.0, 1.0],
-            // [1.0, 1.0, 1.0],
-            // [1.0, 1.0, 1.0]
           ].flat());
   
           // const ambientLight = new Float32Array([0.1, 0.1, 0.1]);
@@ -415,7 +410,7 @@ async function setUpWebgl(){
   // let myMesh = new OBJMesh('tree9/trees9.obj', 'tree9/trees9.mtl');
   // let myMesh = new OBJMesh('chair/chair.obj', 'chair/chair.mtl');
   // let myMesh = new OBJMesh('nyra/nyra.obj', 'nyra/nyra.mtl');
-  let myMesh = new OBJMesh('windmill/windmill.obj', 'windmill/windmill.mtl');
+  // let myMesh = new OBJMesh('windmill/windmill.obj', 'windmill/windmill.mtl');
   // let myMesh = new OBJMesh('palm/10446_Palm_Tree_v1_max2010_iteration-2.obj', 'palm/10446_Palm_Tree_v1_max2010_iteration-2.mtl');
   // let myMesh = new OBJMesh('IndoorPotPlant/indoor plant_02.obj', 'IndoorPotPlant/indoor plant_02.mtl'); 
   // let myMesh = new OBJMesh('Tree/Tree.obj', 'Tree/Tree.mtl');
@@ -553,10 +548,6 @@ async function setUpWebgl(){
   
   function animate(time) {
     requestAnimationFrame(animate);
-    // console.log(time)
-    // var adjust;
-    // var speed = 0.002;
-    // var c = time * speed;
     sceneGraph.traverse((node) => {
 
       // if (node.name === 'root'){
@@ -580,11 +571,11 @@ async function setUpWebgl(){
       }
 
       if (node.name == "sun"){
-        node.transformation.rotation[1] += 0.005;
+        node.transformation.rotation[1] += 0.002;
         sceneGraph.update();
       }
       if (node.name === 'light'){
-        node.transformation.rotation[1] += 0.005;
+        node.transformation.rotation[1] += 0.002;
         sceneGraph.update();
         lightNode.computeBoundingBox();
       }

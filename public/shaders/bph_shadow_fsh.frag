@@ -36,7 +36,7 @@ varying vec4 vLightSpacePos; // Position of the fragment in the light space
 
 
 // const vec3 lightIntensity = vec3(1, 1, 1);
-const vec3 lightIntensity = vec3(1.0, 0.6824, 0.0);
+const vec3 lightIntensity = vec3(1.0, 0.7294, 0.1412);
 const float ambientLight = 0.3;
 
 
@@ -77,8 +77,7 @@ void main() {
 
 
    float spotLightEffect = dot(normalize(-vLightDir), normalize(spotLightDir));
-   float limitRange = spotLightInnerLimit - spotLightOuterLimit;
-   vec3 effectiveLight = lightIntensity * clamp((spotLightEffect - spotLightOuterLimit) / limitRange, 0.0, 1.0);
+   vec3 effectiveLight = lightIntensity * smoothstep(spotLightOuterLimit, spotLightInnerLimit, spotLightEffect);
 
     // Blinn-Phong shading
    float cosTheta = max(dot(N, L), 0.0);
