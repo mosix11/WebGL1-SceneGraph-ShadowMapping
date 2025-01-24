@@ -1,4 +1,4 @@
-# Interactive Graphics Final Project (2023/2024)
+# WebGL1 Scene Graph Construction and Shaodow Mapping Implementaion
 
 This repository contains the code for the final project of Interactive Graphics course (2023/2024) at Sapienza University of Roma. The project is built using WebGL1, Vite, and Yarn.
 
